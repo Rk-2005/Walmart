@@ -8,7 +8,7 @@ import {
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [cartCount, setCartCount] = useState(0);
+  const [cartCount] = useState(0);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userProfile, setUserProfile]: any = useState(null);
@@ -47,14 +47,7 @@ const Navbar = () => {
     }
   };
 
-  async function addToCart(itemId: any) {
-    try {
-      await axios.post('/api/cart', { itemId });
-      setCartCount(prev => prev + 1);
-    } catch (error) {
-      console.error('Add to cart error:', error);
-    }
-  }
+  
 
   const handleLogout = () => {
     localStorage.removeItem('token');
