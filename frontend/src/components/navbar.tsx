@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FiSearch, FiUser, FiShoppingCart, FiChevronDown, FiMapPin, FiPackage, FiHeart, FiGift, FiCreditCard, FiLogOut } from 'react-icons/fi';
@@ -6,12 +6,12 @@ import { FiSearch, FiUser, FiShoppingCart, FiChevronDown, FiMapPin, FiPackage, F
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [locations, setLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedLocation, setSelectedLocation]:any = useState(null);
   const [cartCount, setCartCount] = useState(0);
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userProfile, setUserProfile] = useState(null);
+  const [userProfile, setUserProfile]:any = useState(null);
 
   const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ const Navbar = () => {
 
   // Close dropdowns when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event:any) => {
       if (!event.target.closest('.user-dropdown')) {
         setIsUserDropdownOpen(false);
       }
@@ -53,7 +53,7 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleSearch = async (e) => {
+  const handleSearch = async (e:any) => {
     e.preventDefault();
     try {
       const response = await axios.get('/api/search', {
@@ -65,7 +65,7 @@ const Navbar = () => {
     }
   };
 
-  const handleAddToCart = async (itemId) => {
+  async (itemId:any) => {
     try {
       await axios.post('/api/cart', { itemId });
       setCartCount(prev => prev + 1);
@@ -82,7 +82,7 @@ const Navbar = () => {
     navigate('/');
   };
 
-  const handleMenuClick = (path) => {
+  const handleMenuClick = (path:any) => {
     setIsUserDropdownOpen(false);
     navigate(path);
   };
@@ -107,14 +107,14 @@ const Navbar = () => {
             >
               <FiMapPin className="mr-1" />
               <span className="text-sm font-medium">
-                {selectedLocation?.shortAddress || 'Select location'}
+                {(selectedLocation as any)?.shortAddress || 'Select location'}
               </span>
               <FiChevronDown className="ml-1 text-xs" />
             </button>
 
             {isLocationOpen && (
               <div className="absolute top-full mt-2 w-64 bg-white rounded-md shadow-lg z-10 border">
-                {locations.map(location => (
+                {locations.map((location :any) => (
                   <div
                     key={location.id}
                     onClick={() => {
@@ -124,7 +124,7 @@ const Navbar = () => {
                     className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                   >
                     <p className="font-medium">{location.name}</p>
-                    <p className="text-xs text-gray-500">{location.fullAddress}</p>
+                    <p className="text-xs text-gray-500">{(location as any).fullAddress}</p>
                   </div>
                 ))}
               </div>
@@ -172,7 +172,7 @@ const Navbar = () => {
                 className="flex items-center text-sm text-gray-700 hover:text-blue-600 transition-colors bg-blue-600 text-white px-4 py-2 rounded font-medium"
               >
                 <FiUser className="mr-1" size={16} />
-                {isLoggedIn ? userProfile?.name?.split(' ')[0] || 'Profile' : 'Login'}
+                {isLoggedIn ? (userProfile as any)?.name?.split(' ')[0] || 'Profile' : 'Login'}
                 <FiChevronDown className="ml-1" size={14} />
               </button>
 
