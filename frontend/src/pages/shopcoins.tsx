@@ -19,7 +19,7 @@ function ShopCoins() {
             'Authorization': `${token}`
           }
         });
-        setUserCoins(response.data.user.coinsw);
+        setUserCoins(response.data.user.coins);
         // setRedeemedCoupons(response.data.redeemedCoupons);
         
         // Simulating API delay
