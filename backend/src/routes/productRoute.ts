@@ -5,7 +5,7 @@ import { verify } from "../middlewares/verify"
 
 const router=express.Router()
 
-router.get("/all",verify,getAll)
+router.get("/all",getAll)
 
 router.get("/:id",verify,getSpecific)
 
