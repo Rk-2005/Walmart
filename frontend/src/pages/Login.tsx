@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -8,7 +8,7 @@ const Login = () => {
     password: ''
   });
   const navigate=useNavigate();
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -16,7 +16,7 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async(e:any) => {
     e.preventDefault();
     const response = await axios.post('https://walmart-o6e8.onrender.com/api/auth/signin', formData);
        localStorage.setItem("token",response.data.token);

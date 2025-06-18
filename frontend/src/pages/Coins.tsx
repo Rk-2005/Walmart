@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/navbar';
@@ -127,7 +127,7 @@ function Coins() {
           </div>
           <div className="divide-y divide-gray-200">
             {userData.transactions.length > 0 ? (
-              userData.transactions.map((transaction, index) => (
+              userData.transactions.map((transaction:any, index) => (
                 <div key={index} className="p-4 flex justify-between items-center">
                   <div>
                     <p className="font-medium text-gray-900">{transaction.description}</p>

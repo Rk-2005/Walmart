@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { 
   FiShoppingCart, 
@@ -15,8 +15,7 @@ import {
   FiPlay,
   FiImage,
   FiX,
-  FiChevronRight,
-  FiChevronLeft as FiChevronLeftIcon
+  
 } from "react-icons/fi";
 import axios from "axios";
 import Navbar from "../components/navbar";
@@ -24,7 +23,7 @@ import { jwtDecode } from "jwt-decode";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
+  const [product, setProduct]:any = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -34,7 +33,7 @@ const ProductDetail = () => {
   
   // Modal states for media viewing
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMedia, setModalMedia] = useState(null);
+  const [modalMedia, setModalMedia]:any = useState(null);
   const [modalType, setModalType] = useState(''); // 'image' or 'video'
 
   useEffect(() => {
@@ -88,7 +87,7 @@ const ProductDetail = () => {
   }, [id]);
 
   // Modal functions
-  const openModal = (mediaUrl, type) => {
+  const openModal = (mediaUrl:any, type:any) => {
     setModalMedia(mediaUrl);
     setModalType(type);
     setIsModalOpen(true);
@@ -104,7 +103,7 @@ const ProductDetail = () => {
 
   // Close modal when clicking outside or pressing escape
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e:any) => {
       if (e.key === 'Escape') {
         closeModal();
       }
@@ -118,29 +117,31 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     console.log("Added to cart:", {
-      productId: product.id,
+      productId: (product as any).id,
       quantity,
-      price: product.price,
+      price: (product as any).price,
     });
     // Add your cart logic here
   };
 
   const handleBuyNow = () => {
     const token = localStorage.getItem("token");
-
-    const decoded = jwtDecode(token);
+    if(!token){
+      return;
+    }
+    const decoded:any = jwtDecode(token);
     const userId = decoded.userid; // ✅ Only if your token payload has `userid`
     console.log(userId);
 
     console.log("Buy now:", {
-      productId: product.id,
+      productId: (product as any).id,
       quantity,
-      price: product.price,
-      total: product.price * quantity
+      price: (product as any).price,
+      total: (product as any).price * quantity
     });
-    const res = axios.post("https://walmart-o6e8.onrender.com/api/orders/add", {
+     axios.post("https://walmart-o6e8.onrender.com/api/orders/add", {
       userId,
-      productId: product.id,
+      productId: (product as any).id,
       status: "delivered"
     }, {
       headers: {
@@ -174,7 +175,7 @@ const ProductDetail = () => {
       return { average: 0, count: 0 };
     }
     
-    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+    const totalRating = reviews.reduce((sum, review:any) => sum + review.rating, 0);
     const average = totalRating / reviews.length;
     
     return {
@@ -223,7 +224,7 @@ const ProductDetail = () => {
 
   const reviewStats = getReviewStats();
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review }:any) => {
   const userName = review.user?.name || `User ${review.user?.id || 'Unknown'}`;
   const reviewDate = new Date(review.createdAt).toLocaleDateString();
 

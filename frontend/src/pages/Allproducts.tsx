@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FiSearch, FiShoppingCart } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ const AllProducts = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOption, setSortOption] = useState('featured');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+ 
 
   useEffect(() => {
     const token=localStorage.getItem("token")
@@ -20,8 +20,6 @@ const AllProducts = () => {
           }
         });
         setProducts(res.data.result);
-      } catch (err) {
-        setError('Failed to load products');
       } finally {
         setLoading(false);
       }
@@ -31,11 +29,11 @@ const AllProducts = () => {
   }, []);
 
   const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    (product as any).name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    switch (sortOption) {
+  const sortedProducts = [...filteredProducts].sort((a:any, b:any) => {
+    switch (sortOption ) {
       case 'price-low': return a.price - b.price;
       case 'price-high': return b.price - a.price;
       default: return a.id - b.id; // featured
@@ -90,11 +88,9 @@ const AllProducts = () => {
         {/* Product Grid */}
         {loading ? (
           <div className="text-center text-gray-600 py-10">Loading products...</div>
-        ) : error ? (
-          <div className="text-center text-red-600 py-10">{error}</div>
-        ) : (
+        )  : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {sortedProducts.map((product) => (
+            {sortedProducts.map((product:any) => (
               <div key={product.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
                 {/* Product Image */}
                 <div className="relative">

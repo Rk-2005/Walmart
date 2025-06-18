@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FiMail, FiLock, FiUser } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom'; // or your preferred routing solution
 import axios from 'axios';
@@ -9,7 +9,7 @@ const Signup = () => {
     password: ''
   });
   const navigate=useNavigate();
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -17,7 +17,7 @@ const Signup = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
    

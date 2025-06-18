@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -26,14 +26,14 @@ function Orders() {
         });
         
         // Add delivery status to orders (mock data - replace with actual status from API if available)
-        const ordersWithStatus = response.data.result.map(order => ({
+        const ordersWithStatus = (response).data.result.map((order:any) => ({
           ...order,
           status: order.status,
           deliveryDate: new Date(Date.now() + Math.random() * 10 * 24 * 60 * 60 * 1000)
         }));
         
         setOrders(ordersWithStatus);
-      } catch (err) {
+      } catch (err:any) {
         setError(err.response?.data?.message || err.message);
         if (err.response?.status === 401) {
           navigate('/login');
@@ -114,7 +114,7 @@ function Orders() {
         </div>
         
         <div className="space-y-6">
-          {orders.map((order, index) => (
+          {orders.map((order:any, index) => (
            
             <div key={index} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow border border-gray-100">
               <div className="p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b">
@@ -157,7 +157,7 @@ function Orders() {
                     src={order.product.imageUrl} 
                     alt={order.product.name}
                     className="w-full h-full object-cover"
-                    onError={(e) => {
+                    onError={(e:any) => {
                       e.target.src = '/images/placeholder-product.png';
                       e.target.className = 'w-full h-full object-contain p-4';
                     }}

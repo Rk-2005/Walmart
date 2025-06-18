@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/navbar';
@@ -17,14 +17,14 @@ function AddReview() {
   const [reviewType, setReviewType] = useState('text'); // 'text', 'image', 'video', 'mixed'
 
   // Coin rewards that match your backend
-  const coinRewards = {
+  const coinRewards:any = {
     text: 5,
     image: 10,
     video: 20,
     mixed: 15
   };
 
-  const handleMediaUpload = (e) => {
+  const handleMediaUpload = (e:any) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -45,7 +45,7 @@ function AddReview() {
     setError('');
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     
     if (rating === 0) {
@@ -58,6 +58,7 @@ function AddReview() {
     try{
     
       const formData = new FormData();
+      //@ts-ignore
       formData.append('productId', (productid.id));
       formData.append('rating', rating.toString());
       formData.append('type', reviewType);
@@ -259,7 +260,8 @@ function AddReview() {
 
                   {media && (
                     <div className="mt-4 relative">
-                      {media.type.startsWith('image/') ? (
+                      
+                      {(media as any).type.startsWith('image/') ? (
                         <div className="relative">
                           <img
                             src={URL.createObjectURL(media)}
@@ -279,7 +281,7 @@ function AddReview() {
                       ) : (
                         <div className="relative">
                           <video controls className="max-w-full rounded-lg border border-gray-200">
-                            <source src={URL.createObjectURL(media)} type={media.type} />
+                            <source src={URL.createObjectURL(media)} type={(media as any).type} />
                           </video>
                           <button
                             type="button"

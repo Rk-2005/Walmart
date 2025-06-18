@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -86,13 +86,16 @@ function ShopCoins() {
     }
   ];
 
-  const handleRedeem = (couponId, coinsRequired) => {
+  const handleRedeem = (couponId:any, coinsRequired:any) => {
+
     if (userCoins >= coinsRequired) {
       // In a real app, you would call your API here
       // await axios.post('/api/redeem', { couponId });
       setUserCoins(userCoins - coinsRequired);
       const coupon = coupons.find(c => c.id === couponId);
+      //@ts-ignore
       setRedeemedCoupons([...redeemedCoupons, coupon]);
+      //@ts-ignore
       alert(`Coupon redeemed successfully! Your code: ${coupon.code}`);
     } else {
       alert("You don't have enough coins to redeem this coupon");
@@ -140,7 +143,7 @@ function ShopCoins() {
         <div className="max-w-6xl mx-auto mb-10">
           <h3 className="text-xl font-bold text-gray-800 mb-4">Your Redeemed Coupons</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {redeemedCoupons.map((coupon, index) => (
+            {redeemedCoupons.map((coupon:any, index) => (
               <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden border border-green-200">
                 <div className="p-4">
                   <div className="flex items-start">
