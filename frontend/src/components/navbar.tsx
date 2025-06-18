@@ -1,51 +1,33 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FiSearch, FiUser, FiShoppingCart, FiChevronDown, FiMapPin, FiPackage, FiHeart, FiGift, FiCreditCard, FiLogOut } from 'react-icons/fi';
+import {
+  FiSearch, FiUser, FiShoppingCart, FiChevronDown,
+  FiPackage, FiHeart, FiGift, FiCreditCard, FiLogOut
+} from 'react-icons/fi';
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [locations, setLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation]:any = useState(null);
   const [cartCount, setCartCount] = useState(0);
-  const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userProfile, setUserProfile]:any = useState(null);
+  const [userProfile, setUserProfile]: any = useState(null);
 
   const navigate = useNavigate();
 
-  // On mount: check login status and fetch locations
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
-    
-    // Mock user profile - replace with actual API call
+
     if (token) {
       setUserProfile({ name: 'Ronak', email: 'john@example.com' });
     }
-
-    const fetchLocations = async () => {
-      try {
-        const response = await axios.get('/api/user/locations');
-        setLocations(response.data);
-        setSelectedLocation(response.data[0] || null);
-      } catch (error) {
-        console.error('Error fetching locations:', error);
-      }
-    };
-
-    fetchLocations();
   }, []);
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event:any) => {
+    const handleClickOutside = (event: any) => {
       if (!event.target.closest('.user-dropdown')) {
         setIsUserDropdownOpen(false);
-      }
-      if (!event.target.closest('.location-dropdown')) {
-        setIsLocationOpen(false);
       }
     };
 
@@ -53,11 +35,11 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleSearch = async (e:any) => {
+  const handleSearch = async (e: any) => {
     e.preventDefault();
     try {
       const response = await axios.get('/api/search', {
-        params: { query: searchQuery, location: selectedLocation?.id }
+        params: { query: searchQuery }
       });
       console.log('Search results:', response.data);
     } catch (error) {
@@ -65,14 +47,14 @@ const Navbar = () => {
     }
   };
 
-  async (itemId:any) => {
+  async function addToCart(itemId: any) {
     try {
       await axios.post('/api/cart', { itemId });
       setCartCount(prev => prev + 1);
     } catch (error) {
       console.error('Add to cart error:', error);
     }
-  };
+  }
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -82,7 +64,7 @@ const Navbar = () => {
     navigate('/');
   };
 
-  const handleMenuClick = (path:any) => {
+  const handleMenuClick = (path: any) => {
     setIsUserDropdownOpen(false);
     navigate(path);
   };
@@ -97,38 +79,6 @@ const Navbar = () => {
             <a href="/" className="text-2xl font-bold text-blue-600">
               ShopSwift
             </a>
-          </div>
-
-          {/* Location Selector */}
-          <div className="hidden md:flex items-center ml-6 relative location-dropdown">
-            <button
-              onClick={() => setIsLocationOpen(!isLocationOpen)}
-              className="flex items-center text-gray-700 hover:text-blue-600 transition-colors"
-            >
-              <FiMapPin className="mr-1" />
-              <span className="text-sm font-medium">
-                {(selectedLocation as any)?.shortAddress || 'Select location'}
-              </span>
-              <FiChevronDown className="ml-1 text-xs" />
-            </button>
-
-            {isLocationOpen && (
-              <div className="absolute top-full mt-2 w-64 bg-white rounded-md shadow-lg z-10 border">
-                {locations.map((location :any) => (
-                  <div
-                    key={location.id}
-                    onClick={() => {
-                      setSelectedLocation(location);
-                      setIsLocationOpen(false);
-                    }}
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  >
-                    <p className="font-medium">{location.name}</p>
-                    <p className="text-xs text-gray-500">{(location as any).fullAddress}</p>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Search Bar */}
