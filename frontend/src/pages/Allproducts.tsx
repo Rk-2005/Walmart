@@ -28,9 +28,10 @@ const AllProducts = () => {
     fetchProducts();
   }, []);
 
-  const filteredProducts = products.filter(product =>
-    (product as any).name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredProducts = (products ?? []).filter(product =>
+  (product as any).name.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
 
   const sortedProducts = [...filteredProducts].sort((a:any, b:any) => {
     switch (sortOption ) {
