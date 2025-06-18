@@ -1,5 +1,5 @@
 import  { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { 
   FiShoppingCart, 
   FiChevronLeft, 
@@ -123,7 +123,7 @@ const ProductDetail = () => {
     });
     // Add your cart logic here
   };
-
+  const navigate=useNavigate();
   const handleBuyNow = () => {
     const token = localStorage.getItem("token");
     if(!token){
@@ -148,7 +148,8 @@ const ProductDetail = () => {
         Authorization: token
       }
     });
-    // Add your buy now logic here (redirect to checkout)
+    navigate("/orders")
+   
   };
 
   const handleWishlist = () => {
