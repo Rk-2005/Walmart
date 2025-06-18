@@ -19,7 +19,7 @@ function Orders() {
           throw new Error('Authentication required');
         }
 
-        const response = await axios.get('http://localhost:3000/api/orders/', {
+        const response = await axios.get('https://walmart-o6e8.onrender.com/api/orders/', {
           headers: {
             'Authorization': `${token}`
           }

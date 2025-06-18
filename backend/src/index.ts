@@ -16,6 +16,9 @@ app.use("/api/products",productRoute)
 app.use("/api/orders",ordersRoute)
 app.use("/api/reviews",reviewRoutes);
 app.use("/api/user",CoinRouter);
+app.get("/",(req,res)=>{
+    res.send("hi bhai");
+})
 app.listen(3000,()=>{
     console.log("Server is running on port 3000");
 })

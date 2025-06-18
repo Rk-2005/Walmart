@@ -14,7 +14,7 @@ const AllProducts = () => {
     const token=localStorage.getItem("token")
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/products/all',{
+        const res = await axios.get('https://walmart-o6e8.onrender.com/api/products/all',{
           headers:{
             Authorization:token
           }

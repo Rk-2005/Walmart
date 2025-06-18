@@ -15,7 +15,7 @@ function Coins() {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/api/user/coins', {
+        const response = await axios.get('https://walmart-o6e8.onrender.com/api/user/coins', {
           headers: {
             'Authorization': `${token}`
           }

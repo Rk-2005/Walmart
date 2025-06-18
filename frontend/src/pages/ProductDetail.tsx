@@ -43,7 +43,7 @@ const ProductDetail = () => {
     const fetchProduct = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/products/${id}`,
+          `https://walmart-o6e8.onrender.com/api/products/${id}`,
           {
             headers: {
               Authorization: `${token}`,
@@ -60,7 +60,7 @@ const ProductDetail = () => {
     const fetchReviews = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/reviews/${id}`,
+          `https://walmart-o6e8.onrender.com/api/reviews/${id}`,
           {
             headers: {
               Authorization: `${token}`,
@@ -138,7 +138,7 @@ const ProductDetail = () => {
       price: product.price,
       total: product.price * quantity
     });
-    const res = axios.post("http://localhost:3000/api/orders/add", {
+    const res = axios.post("https://walmart-o6e8.onrender.com/api/orders/add", {
       userId,
       productId: product.id,
       status: "delivered"

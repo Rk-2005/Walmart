@@ -18,7 +18,7 @@ const Login = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    const response = await axios.post('http://localhost:3000/api/auth/signin', formData);
+    const response = await axios.post('https://walmart-o6e8.onrender.com/api/auth/signin', formData);
        localStorage.setItem("token",response.data.token);
        navigate("/")
     console.log('Login submitted:', formData);

@@ -66,7 +66,7 @@ function AddReview() {
       if (media) formData.append('file', media);
 
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:3000/api/reviews/add', formData, {
+      const response = await axios.post('https://walmart-o6e8.onrender.com/api/reviews/add', formData, {
         headers: {
           'Authorization': `${token}`,
           'Content-Type': 'multipart/form-data'
